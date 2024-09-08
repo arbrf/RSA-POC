@@ -34,7 +34,8 @@ public class HttpRestTemplateEngine {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			headers.set("signature", "30Qvqo+PpmXvZ1zhJVdrTqSp36hAM+uWh45p/ltxvac=");
+			//headers.set("signature", "30Qvqo+PpmXvZ1zhJVdrTqSp36hAM+uWh45p/ltxvac=");
+			headers.set("signature", "LkzCydTqIghYqB0Idj5GAceYGnb48xM+Obz8hhaH3Yg=");
 			HttpEntity<?> request = new HttpEntity<>(httpRequest.getRequest(), headers);
 
 			SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();

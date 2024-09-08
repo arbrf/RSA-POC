@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 import com.ct.calculator.ct_calculator_service.controller.service.ValidateSignature;
 import com.ct.calculator.ct_calculator_service.pojo.InputRequest;
-import com.ct.calculator.ct_calculator_service.util.HmacSHA256Util;
+import com.ct.calculator.ct_calculator_service.util.HmacSHA256Util2;
 import com.google.gson.Gson;
 @Component
 public class ValidateSignatureImpl implements  ValidateSignature {
 	
 	@Autowired
-    private HmacSHA256Util hmacSHa;
+    private HmacSHA256Util2 hmacSHa;
 	@Override
 	public boolean validateSignature(String signature,InputRequest request) {
 		// TODO Auto-generated method stub

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ct.calculator.ct_calculator_service.constans.EndPoint;
-import com.ct.calculator.ct_calculator_service.controller.service.ApiCallService;
+import com.ct.calculator.ct_calculator_service.controller.service.ApiService;
 import com.ct.calculator.ct_calculator_service.controller.service.CalculatorService;
 import com.ct.calculator.ct_calculator_service.controller.service.ValidateSignature;
 import com.ct.calculator.ct_calculator_service.pojo.InputRequest;
@@ -33,7 +33,7 @@ public class CalculatorController {
     @Autowired
     private ValidateSignature signatureValid;
     @Autowired
-    private ApiCallService apiCallService;
+    private ApiService apiCallService;
 
     @PostMapping(EndPoint.ADD_MAPPING)
     public ResponseEntity<ResultResponse> getSum(@RequestHeader("signature") String signature, @RequestBody InputRequest request) {
@@ -64,8 +64,14 @@ public class CalculatorController {
     @GetMapping(EndPoint.CALL_SERVICE)
     public ResponseEntity<String> getCall() {
     	InputRequestDTO inputRequestDTO=new InputRequestDTO();
-    	inputRequestDTO.setNumber1(10);
-    	inputRequestDTO.setNumber2(20);
-	   return apiCallService.executeCall(inputRequestDTO);
+    	inputRequestDTO.setNumber1(25);
+    	inputRequestDTO.setNumber2(25);
+	   try {
+		return apiCallService.executeCall(inputRequestDTO);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return (ResponseEntity<String>) ResponseEntity.badRequest();
    }
 }
