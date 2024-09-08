@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ct.calculator.ct_calculator_service.constans.EndPoint;
+import com.ct.calculator.ct_calculator_service.controller.service.ApiCallService;
 import com.ct.calculator.ct_calculator_service.controller.service.CalculatorService;
 import com.ct.calculator.ct_calculator_service.controller.service.ValidateSignature;
 import com.ct.calculator.ct_calculator_service.pojo.InputRequest;
@@ -30,6 +32,8 @@ public class CalculatorController {
 
     @Autowired
     private ValidateSignature signatureValid;
+    @Autowired
+    private ApiCallService apiCallService;
 
     @PostMapping(EndPoint.ADD_MAPPING)
     public ResponseEntity<ResultResponse> getSum(@RequestHeader("signature") String signature, @RequestBody InputRequest request) {
@@ -48,6 +52,7 @@ public class CalculatorController {
 
             // Map the result DTO to the response entity
             ResultResponse result = modelMapper.map(resultResponseDTO, ResultResponse.class);
+            
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -56,4 +61,11 @@ public class CalculatorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(EndPoint.CALL_SERVICE)
+    public ResponseEntity<String> getCall() {
+    	InputRequestDTO inputRequestDTO=new InputRequestDTO();
+    	inputRequestDTO.setNumber1(10);
+    	inputRequestDTO.setNumber2(20);
+	   return apiCallService.executeCall(inputRequestDTO);
+   }
 }
